@@ -1,0 +1,102 @@
+<html>
+    <meta lang="en-us">
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+        <link rel="stylesheet" href="../CSS/Pharmacy.css">
+        <link rel="shortcut icon" href="https://i.pinimg.com/originals/57/1a/e3/571ae39ce1b3360b0cf852322b413bdb.png">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;700&family=Raleway:wght@700&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+        <body>
+            <div class="foreground">
+             <h1 id="heading">PHARMACY PORTAL</h1>
+            <div class="input">
+                <div class="input1">
+                <label id="uniqid">Unique ID:</label>
+                
+                 <input type="text" name="uid" id="uid">
+                 <br/>
+                
+                </div>
+                 <button id='search' onclick="f()">Search</button>
+                <br/>
+                 <br/>
+                  <button id='clear' onclick="clr()">Clear</button>
+                  <br/>
+                  <br/>
+                </div>
+                  <iframe id="prescription" width="100%" height="700" title="Medical Prescription">
+                  </iframe>
+               
+                </div>   
+                </div>
+                
+          <script>     //JS Code begins
+                  var firebaseConfig = {
+                   apiKey: "AIzaSyDGMY7ZwaRcY1GQRvq6s3iW0pySGcDZNpM",    //firebase configuration
+                   authDomain: "ihms-6dfbb.firebaseapp.com",
+                   projectId: "ihms-6dfbb",
+                   storageBucket: "ihms-6dfbb.appspot.com",
+                   messagingSenderId: "797803971513",
+                   appId: "1:797803971513:web:bc709ace17174f3bc0ec68"
+                   };
+
+                   firebase.initializeApp(firebaseConfig);  //initialization of firebase
+ 
+                   document.getElementById("prescription").style.visibility="hidden";
+                   var storage=firebase.storage();
+                    var fpath;
+                   const db= firebase.firestore();
+                     db.settings({timestampsInSnapshots:true});
+                   
+                   function f(){
+                   uid=document.getElementById('uid').value;
+                   var docPath= db.collection("Patients").doc(uid);
+ 
+                    docPath.get().then((doc) => {
+                    if (doc.exists) {
+    
+                    alert("Document Found");
+                    document.getElementById("uid").disabled=true; 
+                    }
+                    else {   
+                      alert("No such document!");
+                      clr();
+                    }})
+                   var docRef = db.collection("Patients/"+uid+'/'+'Reports/').doc("Prescription");
+                    docRef.get().then((doc) => {
+                    if (doc.exists) {
+                        fpath=((doc.data()).Path);
+                        var gsReference = storage.refFromURL(fpath);
+                        gsReference.getDownloadURL()
+                                .then((url) => {
+                       
+                        document.getElementById("prescription").src=url;
+                        })
+                     }
+                     else{
+                             alert("Something went wrong...");
+                         } 
+                     })
+                    document.getElementById("prescription").style.visibility="visible";
+                    
+        
+                    }
+                    function clr(){
+                    document.getElementById('uid').value="";
+                    document.getElementById("uid").disabled=false;
+                    document.getElementById("prescription").src="";
+                    id="";
+                    document.getElementById("prescription").style.visibility="hidden";
+                    } 
+                </script>   
+            </body>
+    </html>           

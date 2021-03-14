@@ -1,0 +1,166 @@
+<html>
+    <meta lang="en-us">
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+        <link rel="stylesheet" href="E:\Programming\Webs\SSN\CSS\Report.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="shortcut icon" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Fmri-machine-scan-device-hospital-line-black-icon-medical-equipment-health-care-concept-sign-web-page-mobile-app-logo-163128272.jpg&imgrefurl=https%3A%2F%2Fwww.dreamstime.com%2Fmri-machine-scan-device-hospital-line-black-icon-medical-equipment-health-care-concept-sign-web-page-mobile-app-logo-image163128272&tbnid=wZVnrHb1aEC5jM&vet=12ahUKEwjxv__TsK_vAhW5m0sFHZ4BDEkQMygFegUIARCoAQ..i&docid=U-WlJwyeXrel6M&w=800&h=800&q=hospital%20scan%20logo&ved=2ahUKEwjxv__TsK_vAhW5m0sFHZ4BDEkQMygFegUIARCoAQ">
+     <link rel="shortcut icon" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Fmri-machine-scan-device-hospital-line-black-icon-medical-equipment-health-care-concept-sign-web-page-mobile-app-logo-163128272.jpg&imgrefurl=https%3A%2F%2Fwww.dreamstime.com%2Fmri-machine-scan-device-hospital-line-black-icon-medical-equipment-health-care-concept-sign-web-page-mobile-app-logo-image163128272&tbnid=wZVnrHb1aEC5jM&vet=12ahUKEwjxv__TsK_vAhW5m0sFHZ4BDEkQMygFegUIARCoAQ..i&docid=U-WlJwyeXrel6M&w=800&h=800&q=hospital%20scan%20logo&ved=2ahUKEwjxv__TsK_vAhW5m0sFHZ4BDEkQMygFegUIARCoAQ">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scan</title>
+    </head>
+    <div class="foreground">
+        <h1 id="heading">REPORT PORTAL</h1>
+        <br/>
+        <br/>
+        <div class="table">
+            <table id="myTable">
+                <tr>
+                  <td id='Name'>Name</td>
+                  <td id="val1"></td>
+                </tr>
+                <tr>
+                  <td id="Age">Age</td>
+                  <td id="val2"></td>
+                </tr>
+                 <tr>
+                    <td id="Gender">Gender</td>
+                      <td id="val3"></td>
+                     </tr>  
+              </table>
+              <br/>
+              <br/>
+            </div>
+        <div class="input">
+            <label>Unique ID:</label>
+             <input type="text" name="uid" id="uid"><button id='search' onclick="findd()">Search</button>
+             <br/>
+             <br/>
+             <select name="subject" id="purpose">
+                <option disabled="disabled" selected="selected"></option>
+                <option>Sugar Test</option>
+                <option>MRI</option>
+                <option>ECG</option>
+            </select>
+            <br/>
+            <input type="file" value="upload" id="fileupload">
+            <progress value="0" max="100" id="uploader">0%</progress>
+            <br/>
+            <br/>
+            <button id='ok' onclick="store()">OK</button>
+            <br/>
+            <br/>
+            <button id='clear' onclick="clr()">Clear</button>
+    </div>    
+    </div>
+<script>
+        var firebaseConfig = {
+       apiKey: "AIzaSyDGMY7ZwaRcY1GQRvq6s3iW0pySGcDZNpM",
+       authDomain: "ihms-6dfbb.firebaseapp.com",
+       projectId: "ihms-6dfbb",
+       storageBucket: "ihms-6dfbb.appspot.com",
+       messagingSenderId: "797803971513",
+       appId: "1:797803971513:web:bc709ace17174f3bc0ec68"
+       };
+       firebase.initializeApp(firebaseConfig);
+       //firebase initialization
+       var id,b=false,prog; 
+       const db= firebase.firestore();
+       var storage=firebase.storage();
+       db.settings({timestampsInSnapshots:true});
+       
+       function clr(){
+       document.getElementById('fileupload').value="";
+       document.getElementById('uid').value="";
+       document.getElementById("purpose").value="";
+      document.getElementById("val1").innerHTML="";
+      document.getElementById("val2").innerHTML="";
+      document.getElementById("val3").innerHTML="";
+      document.getElementById("uid").disabled=false;
+      document.getElementById("uploader").value=0;
+      id="";  
+      }
+
+      function clrupl(){
+        document.getElementById('fileupload').value="";  
+        document.getElementById("uploader").value=0;
+        document.getElementById("purpose").value="";
+        document.getElementById("uploader").style.visibility = "hidden";
+
+      }
+
+    function findd(){
+    id=document.getElementById('uid').value;
+    if(id==undefined ||id==""){
+      alert("Please enter the UID");
+      return;
+    }
+    var docRef = db.collection("Patients").doc(id); 
+    docRef.get().then((doc) => {
+    if (doc.exists) {
+        b=true;
+       alert("Document found");
+       document.getElementById("val1").innerHTML=((doc.data()).First_Name)+' '+((doc.data()).Last_Name);
+    document.getElementById("val2").innerHTML=(doc.data()).Age;
+    document.getElementById("val3").innerHTML=(doc.data()).Gender;
+    document.getElementById("uid").disabled=true; 
+    } 
+    else {
+        // doc.data() will be undefined in this case   
+        alert("No such document!");
+        clr();
+    }
+    }).catch((error) => {
+    console.log("Error getting document:", error);
+    });
+    }
+    document.getElementById("uploader").style.visibility = "hidden";
+  function store(){
+
+    var file=document.getElementById('fileupload');
+    const selectedFile = file.files[0];  
+    var sel = document.getElementById("purpose");
+	var scan_category= sel.options[sel.selectedIndex].text;
+   // alert(id);
+    if(selectedFile!==undefined ){
+        if(id==undefined ||id==""||!b){
+        alert("Invalid UID");
+        clr();
+        return;
+    }
+        var storageRef = storage.ref('Patients/');    
+          var imagesRef = storageRef.child(id+'/'+scan_category+'/'+selectedFile.name); 
+          //alert(imagesRef);
+          
+          var task=imagesRef.put(selectedFile);
+          document.getElementById("uploader").style.visibility = "visible";
+          task.on('state_changed',
+          function progress(snapshot){  
+            var perc=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            document.getElementById("uploader").value=perc; 
+            prog=(document.getElementById("uploader").value);    
+            if(prog==100){
+               clrupl();
+                return;
+            }
+        })
+         //console.log(document.getElementById("uploader").value);
+          db.collection("Patients/"+id+'/'+'Reports/').doc(scan_category).set({Path:String(imagesRef)});
+        } 
+      else{
+        if(id==undefined ||id==""||!b){
+         alert("Please enter the UID");
+         return;}    
+            alert("First select a file");
+            
+        }
+        //clr();
+     } 
+</script>
+</body>
+</html>

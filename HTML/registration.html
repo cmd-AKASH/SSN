@@ -1,0 +1,188 @@
+<html>
+<meta lang="en-us">
+<head>
+    <title>Registration</title>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="E:\Programming\Webs\SSN\CSS\registration.css">
+    <link rel="shortcut icon" href="https://i.pinimg.com/originals/4f/60/30/4f60305f48b01e05db6b53083abf71dd.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Patient Registration Form</h2>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">first name</label>
+                                    <input class="input--style-4" type="text" name="first_name" id="firstname">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">last name</label>
+                                    <input class="input--style-4" type="text" name="last_name" id="lastname">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Age</label>
+                                    <div class="input-group-icon">
+                                        <input class="input--style-4" type="text" name="age" id="age">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input type="radio" name="gender" value="Male" id="male">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input type="radio" name="gender" value="Female" id="female" >
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    <input class="input--style-4" type="email" name="email" id="email">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Phone Number</label>
+                                    <input class="input--style-4" type="text" name="phone" id="phonenumber">
+                                </div>
+                            </div>
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Unique ID</label>
+                                    <input class="input--style-4" type="text" name="UID" id="uid">
+                                </div>
+                            </div>
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Address</label>
+                                    <input class="input--style-4" type="text" name="address" id="address">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="label">Purpose</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="subject" id="purpose">
+                                    <option disabled="disabled" selected="selected"></option>
+                                    <option>Consultation</option>
+                                    <option>Testing</option>
+                                    <option>General</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" onclick="myFunction()">Submit</button>
+                        </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+        // Your web app's Firebase configuration
+var firebaseConfig = {
+apiKey: "AIzaSyDGMY7ZwaRcY1GQRvq6s3iW0pySGcDZNpM",
+authDomain: "ihms-6dfbb.firebaseapp.com",
+projectId: "ihms-6dfbb",
+storageBucket: "ihms-6dfbb.appspot.com",
+messagingSenderId: "797803971513",
+appId: "1:797803971513:web:bc709ace17174f3bc0ec68"
+};
+
+    // Initialize Firebase
+firebase.initializeApp(firebaseConfig);   
+const db= firebase.firestore();
+  db.settings({timestampsInSnapshots:true}); 
+    function myFunction(){
+        //alert("s");
+        var fname=document.getElementById("firstname").value;
+        var lname=document.getElementById("lastname").value;
+        var age=document.getElementById("age").value;
+        var uid=document.getElementById("uid").value;
+        var address=document.getElementById("address").value;
+        var phonenumber=document.getElementById("phonenumber").value;
+        var purpose=document.getElementById("purpose").value;
+        var email=document.getElementById("email").value;
+       	var x = document.getElementById("male").checked;
+        var y = document.getElementById("female").checked;   
+      	if(x){
+  	var gender= document.getElementById("male").value;
+        }
+     else{
+          if(y){
+       var gender="Female"; 
+       
+       document.getElementById("female").value;
+     }
+        else{
+            var gender="";
+            }
+     }
+	var sel = document.getElementById("purpose");
+	var purpose= sel.options[sel.selectedIndex].text;
+        var obj={
+            First_Name:fname,
+            Last_Name:lname,
+            Age:age,
+            Gender:gender,
+            Address:address,
+            Mobile:phonenumber,
+            Purpose:purpose,
+            Email:email
+            } 
+     var docRef = db.collection("Patients").doc(uid);
+      docRef.get().then((doc) => {
+        if (doc.exists) {
+            alert("UID already exists");
+            clr();
+        }
+        else{
+         db.collection("Patients").doc(uid).set(obj);
+        //db.collection("Patients/"+uid+'/'+'Prescription/').doc('Report').set({Path:uid});
+        clr();
+        }}).catch((error) => {
+    console.log("Error getting document:", error);
+    });
+        function clr()
+     {document.getElementById("firstname").value=null;
+     document.getElementById("lastname").value=null;
+        document.getElementById("age").value=null;
+        document.getElementById("uid").value=null;
+        document.getElementById("address").value=null;
+        document.getElementById("phonenumber").value=null;
+        document.getElementById("purpose").value="";
+        document.getElementById("email").value=null;
+       	document.getElementById("male").checked=null;
+
+     }
+    
+    }
+</script>
+</body>
+</html>  
