@@ -1,0 +1,91 @@
+<html>
+<head>
+  <title>Firebase Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  
+  <link rel="stylesheet" href="E:\Programming\Webs\SSN\CSS\login.css">
+</head>
+<body>
+
+  <div id="login_div" class="main-div">
+    <h3>Firebase Web login Example</h3>
+    <input type="email" placeholder="Email..." id="email_field" />
+    <input type="password" placeholder="Password..." id="password_field" />
+
+    <button onclick="login()">Login to Account</button>
+  </div>
+
+  <div id="user_div" class="loggedin-div">
+    <h3>Welcome User</h3>
+    <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    var firebaseConfig = {
+apiKey: "AIzaSyDGMY7ZwaRcY1GQRvq6s3iW0pySGcDZNpM",
+authDomain: "ihms-6dfbb.firebaseapp.com",
+projectId: "ihms-6dfbb",
+storageBucket: "ihms-6dfbb.appspot.com",
+messagingSenderId: "797803971513",
+appId: "1:797803971513:web:bc709ace17174f3bc0ec68"
+};
+firebase.initializeApp(firebaseConfig);
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+
+    document.getElementById("user_div").style.display = "block";
+    document.getElementById("login_div").style.display = "none";
+
+    var user = firebase.auth().currentUser;
+
+    if(user != null){
+
+      var email_id = user.email;
+      document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
+      window.location.replace("E:\Programming\Webs\SSN\HTML\doctor.html");
+
+    }
+
+  } else {
+    // No user is signed in.
+
+    document.getElementById("user_div").style.display = "none";
+    document.getElementById("login_div").style.display = "block";
+
+  }
+});
+
+function login(){
+
+var userEmail = document.getElementById("email_field").value;
+var userPass = document.getElementById("password_field").value;
+if(userEmail!="kevin@gmail.com"){
+  location.reload();
+         return;
+}
+
+firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+
+  window.alert("Error : " + errorMessage);
+
+  // ...
+});
+
+}
+function logout(){
+                firebase.auth().signOut();
+                
+        }
+
+
+</script>
+
+</body>
+</html>

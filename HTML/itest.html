@@ -10,11 +10,20 @@
         <link rel="stylesheet" href="E:\Programming\Webs\SSN\CSS\Report.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="shortcut icon" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Fmri-machine-scan-device-hospital-line-black-icon-medical-equipment-health-care-concept-sign-web-page-mobile-app-logo-163128272.jpg&imgrefurl=https%3A%2F%2Fwww.dreamstime.com%2Fmri-machine-scan-device-hospital-line-black-icon-medical-equipment-health-care-concept-sign-web-page-mobile-app-logo-image163128272&tbnid=wZVnrHb1aEC5jM&vet=12ahUKEwjxv__TsK_vAhW5m0sFHZ4BDEkQMygFegUIARCoAQ..i&docid=U-WlJwyeXrel6M&w=800&h=800&q=hospital%20scan%20logo&ved=2ahUKEwjxv__TsK_vAhW5m0sFHZ4BDEkQMygFegUIARCoAQ">
-
-     <link rel="shortcut icon" href="https://i.pinimg.com/originals/4f/60/30/4f60305f48b01e05db6b53083abf71dd.png">   
+    <link rel="shortcut icon" href="https://i.pinimg.com/originals/4f/60/30/4f60305f48b01e05db6b53083abf71dd.png">   
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Scan</title>
     </head>
+    <body>
+    <div id="login_div" class="main-div">
+        <h3>IHMS SCAN PORTAL</h3>
+        <input type="email" placeholder="Email..." id="email_field" />
+        <input type="password" placeholder="Password..." id="password_field" />
+    
+        <button onclick="login()">Login</button>
+      </div>
+
+      <div id="mainpg">
     <div class="foreground">
         <h1 id="heading">REPORT PORTAL</h1>
         <br/>
@@ -44,6 +53,7 @@
             <button id='ok' onclick="store()">OK</button>
           
             <button id='clear' onclick="clr()">Clear</button>
+            <button id='clear' onclick="logout()">Logout</button>
             <div class="table">
               <table id="myTable">
                   <tr>
@@ -64,6 +74,7 @@
               </div>
     </div>    
     </div>
+      </div>
 <script>
         var firebaseConfig = {
        apiKey: "AIzaSyDGMY7ZwaRcY1GQRvq6s3iW0pySGcDZNpM",
@@ -80,7 +91,52 @@
        const db= firebase.firestore();
        var storage=firebase.storage();
        db.settings({timestampsInSnapshots:true});
-       
+
+       firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+   
+    document.getElementById("login_div").style.display = "block";
+    
+    var user = firebase.auth().currentUser;
+
+    if(user != null){
+        document.getElementById("mainpg").style.display = "block";
+        document.getElementById("login_div").style.display = "none";
+    }
+  }
+else {
+  // No user is signed in.
+
+  document.getElementById("mainpg").style.display = "none";
+  document.getElementById("login_div").style.display = "block";
+
+}   
+  
+});
+function login(){
+  
+
+var userEmail = document.getElementById("email_field").value;
+var userPass = document.getElementById("password_field").value;
+if(userEmail!="report@gmail.com"){
+         alert("Invalid User");
+         location.reload();
+         return;
+}
+
+firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+
+  window.alert("Error : " + errorMessage);
+
+  // ...
+});
+
+}
+  
        function clr(){
        document.getElementById('fileupload').value="";
        document.getElementById('uid').value="";
@@ -171,6 +227,13 @@
         }
         //clr();
      } 
+
+     function logout(){
+                        location.reload();
+                firebase.auth().signOut();
+                
+                      }
 </script>
+
 </body>
 </html>

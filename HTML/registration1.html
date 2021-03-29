@@ -5,23 +5,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="E:\Programming\Webs\SSN\CSS\registration.css">
     <link rel="shortcut icon" href="https://i.pinimg.com/originals/4f/60/30/4f60305f48b01e05db6b53083abf71dd.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div id="login_div" class="main-div">
-        <h2>IHMS REGISTRATION PORTAL</h2>
-        <br/>
-        <br/>
-        <input type="email" placeholder="Email..." id="email_field" />
-        <input type="password" placeholder="Password..." id="password_field" />
-    
-        <button onclick="login()">Login</button>
-      </div>
-      <div id="mainpg">
+
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
@@ -76,7 +66,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Phone Number</label>
-                                    <input class="input--style-4" type="number" name="phone" id="phonenumber">
+                                    <input class="input--style-4" type="text" name="phone" id="phonenumber">
                                 </div>
                             </div>
                              <div class="col-2">
@@ -107,14 +97,12 @@
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" onclick="myFunction()">Submit</button>
                         </div>
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" onclick="logout()">Logout</button>
-                        </div>
+                
                 </div>
             </div>
         </div>
     </div>
-   </div>
+
 
 <script>
         // Your web app's Firebase configuration
@@ -128,62 +116,9 @@ appId: "1:797803971513:web:bc709ace17174f3bc0ec68"
 };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);   
-    const db= firebase.firestore();
+firebase.initializeApp(firebaseConfig);   
+const db= firebase.firestore();
   db.settings({timestampsInSnapshots:true}); 
-    document.getElementById("mainpg").style.display = "none";
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-   
-    document.getElementById("login_div").style.display = "block";
-    
-    var user = firebase.auth().currentUser;
-
-    if(user != null){
-        document.getElementById("mainpg").style.display = "block";
-        document.getElementById("login_div").style.display = "none";
-    }
-  }
-else {
-  // No user is signed in.
-
-  document.getElementById("mainpg").style.display = "none";
-  document.getElementById("login_div").style.display = "block";
-
-}   
-  
-});
-function login(){
- 
-
-var userEmail = document.getElementById("email_field").value;
-var userPass = document.getElementById("password_field").value;
-if(userEmail!="reception@gmail.com"){
-         alert("Invalid User");
-         location.reload();
-         return;
-}
-
-firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-
-  window.alert("Error : " + errorMessage);
-
-  // ...
-});
-
-}
-function logout(){
-                        location.reload();
-                firebase.auth().signOut();
-                
-                      }
-
-
-
     function myFunction(){
         //alert("s");
         var fname=document.getElementById("firstname").value;
@@ -248,11 +183,6 @@ function logout(){
      }
     
     }
-    function logout(){
-                        location.reload();
-                firebase.auth().signOut();
-                
-                      }
 </script>
 </body>
 </html>  

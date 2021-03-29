@@ -16,18 +16,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
         <body>
-            <div id="login_div" class="main-div">
-                <h3><b>IHMS Pharmacy portal</b></h3>
-                <input type="email" placeholder="Email..." id="email_field" />
-                <input type="password" placeholder="Password..." id="password_field" />
-            
-                <button onclick="login()">Login</button>
-              </div>
-
-              <div id="mainpg">
             <div class="foreground">
              <h1 id="heading">PHARMACY PORTAL</h1>
-             <br/>
             <div class="input">
                 <div class="input1">
                 <label id="uniqid">Unique ID:</label>
@@ -40,7 +30,7 @@
                 <br/>
                  <br/>
                   <button id='clear' onclick="clr()">Clear</button>
-                  <button id='clear' onclick="logout()">Logout</button>
+                  
                   <br/>
                   <br/>
                 </div>
@@ -49,7 +39,6 @@
                
                 </div>   
                 </div>
-            </div>
                 
           <script>     //JS Code begins
                   var firebaseConfig = {
@@ -62,50 +51,6 @@
                    };
 
                    firebase.initializeApp(firebaseConfig);  //initialization of firebase
-                   document.getElementById("mainpg").style.display = "none";
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-   
-    document.getElementById("login_div").style.display = "block";
-    
-    var user = firebase.auth().currentUser;
-
-    if(user != null){
-        document.getElementById("mainpg").style.display = "block";
-        document.getElementById("login_div").style.display = "none";
-    }
-  }
-else {
-  // No user is signed in.
-
-  document.getElementById("mainpg").style.display = "none";
-  document.getElementById("login_div").style.display = "block";
-
-}   
-  
-});
-function login(){
-
-var userEmail = document.getElementById("email_field").value;
-var userPass = document.getElementById("password_field").value;
-if(userEmail!="pharmacy@gmail.com"){
-         alert("Invalid User");
-         location.reload();
-         return;
-}
-
-firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-
-  window.alert("Error : " + errorMessage);
-
-  // ...
-});
-
-}
  
                    document.getElementById("prescription").style.visibility="hidden";
                    var storage=firebase.storage();
@@ -153,12 +98,6 @@ firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(e
                     id="";
                     document.getElementById("prescription").style.visibility="hidden";
                     } 
-
-                    function logout(){
-                        location.reload();
-                firebase.auth().signOut();
-                
-                      }
                 </script>   
             </body>
     </html>           
