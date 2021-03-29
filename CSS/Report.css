@@ -4,14 +4,14 @@ body{
     background-size: cover;
 }
 table, th, td {
-    border: 1px solid black;
-    width: 50%;
-    margin-right: auto;
-    margin-left:auto ;
-    padding-top: auto;
-    border-collapse: collapse;
-    background-color: #b2aeb6;
-  }
+  border: 1px solid black;
+  width: 50%;
+  margin-top: -12%;
+  margin-left:auto ;
+  padding-top: auto;
+  border-collapse: collapse;
+  background-color: #eeeaea;   /**#b2aeb6**/
+}
 h1{
   text-align: center;
 }
@@ -24,8 +24,8 @@ h1{
         padding: 50px;
         background-position: 10 20;
         background-color: #fcfcfc;
-        bwackground-image: url('https://mybroadband.co.za/news/wp-content/uploads/2016/10/Medical-aid.jpg');
-        background-repeat: repeat;
+       /** background-imasge: url('https://digitalalchemy.studio/wp-content/uploads/2019/08/What-to-Expect-CT-scan.jpg');**/
+        background-repeat: no-repeat;
         background-size: cover;
   } 
   
@@ -59,4 +59,81 @@ h1{
 .purpose{
     position: relative;
   font-family: Arial;
+}
+
+
+#search{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#search:hover{
+  background-color: rgb(91, 94, 89);
+}
+
+#clear{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#clear:hover{
+  background-color: rgb(91, 94, 89);
+}
+#uniqid{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+}
+
+#clear{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#ok{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#ok:hover{
+  background-color: rgb(91, 94, 89);
 }

@@ -18,29 +18,13 @@
         <h1 id="heading">REPORT PORTAL</h1>
         <br/>
         <br/>
-        <div class="table">
-            <table id="myTable">
-                <tr>
-                  <td id='Name'>Name</td>
-                  <td id="val1"></td>
-                </tr>
-                <tr>
-                  <td id="Age">Age</td>
-                  <td id="val2"></td>
-                </tr>
-                 <tr>
-                    <td id="Gender">Gender</td>
-                      <td id="val3"></td>
-                     </tr>  
-              </table>
-              <br/>
-              <br/>
-            </div>
+     
         <div class="input">
             <label>Unique ID:</label>
-             <input type="text" name="uid" id="uid"><button id='search' onclick="findd()">Search</button>
+             <input type="text" name="uid" id="uid" accept=".pdf"><button id='search' onclick="findd()">Search</button>
              <br/>
              <br/>
+             <label>Select Scan category:</label>
              <select name="subject" id="purpose">
                 <option disabled="disabled" selected="selected"></option>
                 <option>Sugar Test</option>
@@ -48,14 +32,32 @@
                 <option>ECG</option>
             </select>
             <br/>
+            <br/>
             <input type="file" value="upload" id="fileupload">
             <progress value="0" max="100" id="uploader">0%</progress>
             <br/>
             <br/>
             <button id='ok' onclick="store()">OK</button>
-            <br/>
-            <br/>
+          
             <button id='clear' onclick="clr()">Clear</button>
+            <div class="table">
+              <table id="myTable">
+                  <tr>
+                    <td id='Name'>Name</td>
+                    <td id="val1"></td>
+                  </tr>
+                  <tr>
+                    <td id="Age">Age</td>
+                    <td id="val2"></td>
+                  </tr>
+                   <tr>
+                      <td id="Gender">Gender</td>
+                        <td id="val3"></td>
+                       </tr>  
+                </table>
+                <br/>
+                <br/>
+              </div>
     </div>    
     </div>
 <script>
@@ -70,6 +72,7 @@
        firebase.initializeApp(firebaseConfig);
        //firebase initialization
        var id,b=false,prog; 
+       document.getElementById("myTable").style.visibility="hidden";
        const db= firebase.firestore();
        var storage=firebase.storage();
        db.settings({timestampsInSnapshots:true});
@@ -83,6 +86,7 @@
       document.getElementById("val3").innerHTML="";
       document.getElementById("uid").disabled=false;
       document.getElementById("uploader").value=0;
+      document.getElementById("myTable").style.visibility="hidden";
       id="";  
       }
 
@@ -115,6 +119,7 @@
         alert("No such document!");
         clr();
     }
+    document.getElementById("myTable").style.visibility="visible";
     }).catch((error) => {
     console.log("Error getting document:", error);
     });

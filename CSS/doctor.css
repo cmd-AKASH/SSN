@@ -1,16 +1,16 @@
 body{
-    background-image: url('https://developer.mozilla.org/en-US/docs/Web/CSS/Scaling_of_SVG_backgrounds/no-dimensions-or-ratio-contain.png');
+    /**backgrowund-image: url('https://developer.mozilla.org/en-US/docs/Web/CSS/Scaling_of_SVG_backgrounds/no-dimensions-or-ratio-contain.png');**/
     background-repeat: repeat;
     background-size: cover;
 }
 table, th, td {
     border: 1px solid black;
     width: 50%;
-    margin-right: auto;
+    margin-top: -12%;
     margin-left:auto ;
     padding-top: auto;
     border-collapse: collapse;
-    background-color: #b2aeb6;
+    background-color: #eeeaea;   /**#b2aeb6**/
   }
 h1{
   text-align: center;
@@ -51,4 +51,88 @@ h1{
 .prescription{
   float: right;
   display: flex;
+}
+
+.input{
+  display: block;
+  align-items: left;
+
+
+ /**  bordeer: 2px solid rgb(8, 8, 8);  
+  backgroeund-color: rgb(184, 184, 184);**/
+}
+#search{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#search:hover{
+  background-color: rgb(91, 94, 89);
+}
+
+#clear{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#clear:hover{
+  background-color: rgb(91, 94, 89);
+}
+#uniqid{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+}
+
+#clear{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#ok{
+  background-color: #112353;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: auto;
+}
+
+#ok:hover{
+  background-color: rgb(91, 94, 89);
 }

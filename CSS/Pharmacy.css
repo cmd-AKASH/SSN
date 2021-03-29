@@ -1,5 +1,5 @@
 body{
-    background-image: url('https://developer.mozilla.org/en-US/docs/Web/CSS/Scaling_of_SVG_backgrounds/no-dimensions-or-ratio-contain.png');
+    backgrounwd-image: url('https://developer.mozilla.org/en-US/docs/Web/CSS/Scaling_of_SVG_backgrounds/no-dimensions-or-ratio-contain.png');
     background-repeat: repeat;
     background-size: cover;
 }

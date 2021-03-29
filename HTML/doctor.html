@@ -1,0 +1,185 @@
+<html>
+    <meta lang="en-us">
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+        <link rel="stylesheet" href="E:\Programming\Webs\SSN\CSS\doctor.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="shortcut icon" href="https://i.pinimg.com/originals/4f/60/30/4f60305f48b01e05db6b53083abf71dd.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Doctor</title>
+    </head>
+    <body>
+      <div class="foreground">
+        <h1 id="heading">DOCTOR PORTAL</h1>
+        <div class="input">
+          <label>Unique ID:</label>
+           <input type="text" name="uid" id="uid">
+           <button id='search' onclick="f()">Search</button>
+          <br/>
+           <br/>
+            <input type="file" value="upload" id="fu">
+            <button id='ok' onclick="store()">Upload</button>
+            <button id='clear' onclick="clr()">Clear</button>
+            <br/>
+            <br/>
+            <label>Reports:</label>
+            <select name="subject" oninput="viewReport()" id="report">
+              <option disabled="disabled" selected="selected"></option>
+              <option>Sugar Test</option>
+              <option>MRI</option>
+              <option>ECG</option>
+           </select>
+          </div>    
+          <br/>
+            <div class="table">
+              <table id="myTable">
+            <tr>
+              <td id='Name'>Name</td>
+              <td id="val1"></td>
+            </tr>
+            <tr>
+              <td id="Age">Age</td>
+              <td id="val2"></td>
+            </tr>
+             <tr>
+                <td id="Gender">Gender</td>
+                  <td id="val3"></td>
+                 </tr>  
+          </table>
+        </div>
+           <br>
+            <iframe id="sreport" width="100%" height="700" title="Scan Report">
+            </iframe>
+                  
+    </div>
+
+<script>
+  
+  document.getElementById("sreport").style.visibility="hidden";
+ var firebaseConfig = {
+apiKey: "AIzaSyDGMY7ZwaRcY1GQRvq6s3iW0pySGcDZNpM",
+authDomain: "ihms-6dfbb.firebaseapp.com",
+projectId: "ihms-6dfbb",
+storageBucket: "ihms-6dfbb.appspot.com",
+messagingSenderId: "797803971513",
+appId: "1:797803971513:web:bc709ace17174f3bc0ec68"
+};
+  firebase.initializeApp(firebaseConfig);
+  const db= firebase.firestore();
+  var storage=firebase.storage();
+  db.settings({timestampsInSnapshots:true});
+  var id,b=false;
+  document.getElementById("myTable").style.visibility="hidden";
+  function clr(){
+       document.getElementById('fu').value="";
+       document.getElementById('uid').value="";
+       document.getElementById("val1").innerHTML="";
+      document.getElementById("val2").innerHTML="";
+      document.getElementById("val3").innerHTML="";
+      document.getElementById("uid").disabled=false;
+      document.getElementById("report").value="Choose";
+      document.getElementById("sreport").src="";
+      document.getElementById("sreport").style.visibility="hidden";
+      document.getElementById("myTable").style.visibility="hidden";
+      id="";
+} 
+  
+  function f(){
+   id=document.getElementById('uid').value;
+   if(id==undefined ||id==""){
+      alert("Please enter the UID");
+      return;
+  }
+  var docRef = db.collection("Patients").doc(id);
+ 
+ docRef.get().then((doc) => {
+    if (doc.exists) {
+        //alert("Document data:"+(doc.data()).First_Name);
+       b=true;
+       
+    document.getElementById("val1").innerHTML=((doc.data()).First_Name)+' '+((doc.data()).Last_Name);
+    document.getElementById("val2").innerHTML=(doc.data()).Age;
+    document.getElementById("val3").innerHTML=(doc.data()).Gender;
+    document.getElementById("uid").disabled=true; 
+  }
+    
+    else {
+        // doc.data() will be undefined in this case   
+        alert("No such document!");
+
+    clr();    
+    }
+    document.getElementById("myTable").style.visibility="visible";
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+}
+function store(){
+  var file=document.getElementById('fu');
+ // var id=document.getElementById('uid').value; 
+   const selectedFile = file.files[0];  
+         //alert(id);
+         //f();
+      if(selectedFile!==undefined ){
+        if(id==undefined ||id==""||!b){
+      alert("Invalid UID");
+      clr();
+      return;}
+        var storageRef = storage.ref('Patients/');    
+        var imagesRef = storageRef.child(id+'/'+'Prescription/'+selectedFile.name); 
+          //alert(imagesRef);
+          imagesRef.put(selectedFile);
+          db.collection("Patients/"+id+'/'+'Reports/').doc('Prescription').set({Path:String(imagesRef)});
+          clr();
+        } 
+      else{
+        if(id==undefined ||id==""||!b){
+       alert("Please enter the UID");
+      return;}    
+        alert("First select a file");
+        }
+        //clr();
+     } 
+     function viewReport(){
+       if(id==""||id==undefined)
+       {alert("UID field cannot be empty");
+        clr(); 
+       return;
+       }
+      document.getElementById("sreport").style.visibility="visible";
+      var sel = document.getElementById("report");
+	    var reporttype= sel.options[sel.selectedIndex].text;
+        var docPath = db.collection("Patients/"+id+'/'+'Reports/').doc(reporttype);
+        
+       
+      document.getElementById("sreport").style.visibility="visible";
+                    docPath.get().then((doc) => {
+                    if (doc.exists) {
+                        fpath=((doc.data()).Path);
+                        var gsReference = storage.refFromURL(fpath);
+                        gsReference.getDownloadURL()
+                                .then((url) => {
+                        document.getElementById("sreport").src=url;
+                        })
+                     }
+                     else{
+                             alert("Something went wrong...");
+                         } 
+                     })
+                     document.getElementById("sreport").style.visibility="visible";
+                    
+                     
+                    }
+     
+ 
+    
+
+  
+</script>
+</body>
+</html>
